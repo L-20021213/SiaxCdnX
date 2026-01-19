@@ -40,10 +40,10 @@
 ## 🚀 快速部署
 
 ### Vercel 一键部署
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/siaxcdn&project-name=siaxcdn&repository-name=siaxcdn)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/L-20021213/SiaxCdnX&project-name=SiaxCdnX&repository-name=SiaxCdnX)
 
 ### Netlify 一键部署
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yourusername/siaxcdn)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/L-20021213/SiaxCdnX)
 
 ### 腾讯云 Serverless 部署
 
