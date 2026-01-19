@@ -1,0 +1,102 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*).pdf$",
+      "destination": "/",
+      "statusCode": 403
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/npm/(.*)",
+      "destination": "https://cdn.jsdelivr.net/npm/$1"
+    },
+    {
+      "source": "/gh/(.*)",
+      "destination": "https://cdn.jsdelivr.net/gh/$1"
+    },
+    {
+      "source": "/wp/(.*)",
+      "destination": "https://cdn.jsdelivr.net/wp/$1"
+    },
+    {
+      "source": "/avatar/(.*)",
+      "destination": "https://www.gravatar.com/avatar/$1"
+    },
+    {
+      "source": "/unpkg/(.*)",
+      "destination": "https://unpkg.com/$1"
+    },
+    {
+      "source": "/cdnjs/(.*)",
+      "destination": "https://cdnjs.cloudflare.com/ajax/libs/$1"
+    },
+    {
+      "source": "/fonts/(.*)",
+      "destination": "https://fonts.googleapis.com/css$1"
+    },
+    {
+      "source": "/fonts-gstatic/(.*)",
+      "destination": "https://fonts.gstatic.com/s/$1"
+    },
+    {
+      "source": "/jquery/(.*)",
+      "destination": "https://code.jquery.com/$1"
+    },
+    {
+      "source": "/bootstrap/(.*)",
+      "destination": "https://stackpath.bootstrapcdn.com/bootstrap/$1"
+    },
+    {
+      "source": "/fontawesome/(.*)",
+      "destination": "https://use.fontawesome.com/releases/$1"
+    },
+    {
+      "source": "/gemini/(.*)",
+      "destination": "https://generativelanguage.googleapis.com/$1"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Content-Encoding",
+          "value": "gzip, br"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    }
+  ]
+}

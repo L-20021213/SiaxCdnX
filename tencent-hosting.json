@@ -1,0 +1,74 @@
+{
+  "version": "3.0",
+  "routes": [
+    {
+      "source": "/*.pdf",
+      "status": 403
+    },
+    {
+      "source": "/npm/*",
+      "target": "https://cdn.jsdelivr.net/npm/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/gh/*",
+      "target": "https://cdn.jsdelivr.net/gh/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/wp/*",
+      "target": "https://cdn.jsdelivr.net/wp/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/avatar/*",
+      "target": "https://www.gravatar.com/avatar/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/unpkg/*",
+      "target": "https://unpkg.com/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/cdnjs/*",
+      "target": "https://cdnjs.cloudflare.com/ajax/libs/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/fonts/*",
+      "target": "https://fonts.googleapis.com/css$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/fonts-gstatic/*",
+      "target": "https://fonts.gstatic.com/s/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/jquery/*",
+      "target": "https://code.jquery.com/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/bootstrap/*",
+      "target": "https://stackpath.bootstrapcdn.com/bootstrap/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/fontawesome/*",
+      "target": "https://use.fontawesome.com/releases/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/gemini/*",
+      "target": "https://generativelanguage.googleapis.com/$1",
+      "action": "rewrite"
+    },
+    {
+      "source": "/",
+      "target": "/index.html",
+      "action": "rewrite"
+    }
+  ]
+}

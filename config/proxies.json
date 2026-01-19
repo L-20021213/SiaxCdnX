@@ -1,0 +1,124 @@
+{
+  "name": "SiaxCDN",
+  "version": "1.0.0",
+  "domain": "siax.cn",
+  "rules": [
+    {
+      "id": "npm",
+      "name": "NPM加速",
+      "source": "/npm/*",
+      "destination": "https://cdn.jsdelivr.net/npm/$1",
+      "description": "NPM 包文件加速，支持指定版本号、标签和具体文件路径",
+      "example": "/npm/vue@3.3.4/dist/vue.global.js"
+    },
+    {
+      "id": "gh",
+      "name": "GitHub加速",
+      "source": "/gh/*",
+      "destination": "https://cdn.jsdelivr.net/gh/$1",
+      "description": "GitHub 仓库文件代理，格式：/gh/用户/仓库@版本/文件路径",
+      "example": "/gh/twbs/bootstrap@5.3.0/dist/css/bootstrap.css"
+    },
+    {
+      "id": "wp",
+      "name": "WordPress加速",
+      "source": "/wp/*",
+      "destination": "https://cdn.jsdelivr.net/wp/$1",
+      "description": "WordPress 插件/主题资源加速，支持官方仓库所有资源",
+      "example": "/wp/plugins/akismet/tags/5.2/akismet.js"
+    },
+    {
+      "id": "avatar",
+      "name": "Gravatar头像",
+      "source": "/avatar/*",
+      "destination": "https://www.gravatar.com/avatar/$1",
+      "description": "头像服务代理，支持尺寸、默认头像等参数，哈希算法：MD5",
+      "example": "/avatar/EMAIL_MD5_HASH?s=200&d=mp&r=g"
+    },
+    {
+      "id": "unpkg",
+      "name": "Unpkg加速",
+      "source": "/unpkg/*",
+      "destination": "https://unpkg.com/$1",
+      "description": "NPM 包浏览器友好化，自动解析包入口文件及依赖",
+      "example": "/unpkg/react@18.2.0/umd/react.production.min.js"
+    },
+    {
+      "id": "cdnjs",
+      "name": "cdnjs加速",
+      "source": "/cdnjs/*",
+      "destination": "https://cdnjs.cloudflare.com/ajax/libs/$1",
+      "description": "通用前端库加速，包含数千个常见JavaScript/CSS库",
+      "example": "/cdnjs/jquery/3.7.1/jquery.min.js"
+    },
+    {
+      "id": "fonts",
+      "name": "Google Fonts CSS",
+      "source": "/fonts/*",
+      "destination": "https://fonts.googleapis.com/css$1",
+      "description": "Web字体样式表代理，支持多字体、字重和字符集参数",
+      "example": "/fonts?family=Roboto:wght@300;400;700&display=swap"
+    },
+    {
+      "id": "fonts-gstatic",
+      "name": "Google Fonts文件",
+      "source": "/fonts-gstatic/*",
+      "destination": "https://fonts.gstatic.com/s/$1",
+      "description": "字体文件资源代理，提供WOFF2等格式的字体文件",
+      "example": "/fonts-gstatic/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2"
+    },
+    {
+      "id": "jquery",
+      "name": "jQuery官方",
+      "source": "/jquery/*",
+      "destination": "https://code.jquery.com/$1",
+      "description": "jQuery官方CDN代理，提供所有版本的核心库及插件",
+      "example": "/jquery/jquery-3.7.1.min.js"
+    },
+    {
+      "id": "bootstrap",
+      "name": "Bootstrap",
+      "source": "/bootstrap/*",
+      "destination": "https://stackpath.bootstrapcdn.com/bootstrap/$1",
+      "description": "Bootstrap框架资源，包含CSS、JS及主题文件所有版本",
+      "example": "/bootstrap/5.3.0/css/bootstrap.min.css"
+    },
+    {
+      "id": "fontawesome",
+      "name": "Font Awesome",
+      "source": "/fontawesome/*",
+      "destination": "https://use.fontawesome.com/releases/$1",
+      "description": "图标字体库代理，支持CSS和JS两种引入方式及版本选择",
+      "example": "/fontawesome/v6.4.0/css/all.css"
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini API",
+      "source": "/gemini/*",
+      "destination": "https://generativelanguage.googleapis.com/$1",
+      "description": "Gemini AI API 代理，用于调用谷歌生成式AI模型接口",
+      "example": "/gemini/v1/models"
+    }
+  ],
+  "security": {
+    "blockedExtensions": [".pdf"],
+    "hotlinkProtection": {
+      "enabled": false,
+      "allowedReferers": ["*.siax.cn", "localhost", "127.0.0.1"]
+    },
+    "cors": {
+      "allowOrigin": "*",
+      "allowMethods": ["GET", "POST", "OPTIONS"],
+      "allowHeaders": ["Content-Type"]
+    },
+    "headers": {
+      "X-Content-Type-Options": "nosniff",
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-XSS-Protection": "1; mode=block"
+    }
+  },
+  "performance": {
+    "cacheControl": "public, max-age=31536000, immutable",
+    "contentEncoding": ["gzip", "br"]
+  }
+}

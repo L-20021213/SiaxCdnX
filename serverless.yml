@@ -1,0 +1,37 @@
+# Tencent Cloud Serverless Configuration
+
+# 版本信息
+version: '2.0'
+envId: ''
+
+# 函数配置
+functions:
+  proxy:
+    handler: index.main
+    runtime: Nodejs16.13
+    timeout: 10
+    memorySize: 128
+    triggers:
+      - type: apigw
+        name: apigw-proxy
+        config:
+          protocols: [https]
+          serviceTimeout: 15
+          environment: release
+          endpoints:
+            - path: /
+              method: ANY
+            - path: /{path+}
+              method: ANY
+
+# API网关配置
+apigw:
+  apigw-proxy:
+    parameters:
+      protocols: [https]
+      environment: release
+      endpoints:
+        - path: /
+          method: ANY
+        - path: /{path+}
+          method: ANY

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiaxCDN - 多功能CDN反向代理服务</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --background-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-background: rgba(255, 255, 255, 0.95);
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--background-gradient);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .domain {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+
+        /* Search */
+        .search-container {
+            max-width: 600px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Services Grid */
+        .services-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: var(--card-background);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .service-card .source {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .service-card .description {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .service-card .example {
+            background: #f7fafc;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            word-break: break-all;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Usage Examples */
+        .usage-section {
+            background: var(--card-background);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .usage-card {
+            padding: 25px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .usage-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Consolas", "Monaco", monospace;
+            font-size: 0.85rem;
+            margin: 10px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-secondary);
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            background: var(--card-background);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .usage-section {
+                padding: 20px;
+            }
+
+            .usage-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                padding: 20px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.2s; }
+        .service-card:nth-child(3) { animation-delay: 0.3s; }
+        .service-card:nth-child(4) { animation-delay: 0.4s; }
+        .service-card:nth-child(5) { animation-delay: 0.5s; }
+        .service-card:nth-child(6) { animation-delay: 0.6s; }
+        .service-card:nth-child(7) { animation-delay: 0.7s; }
+        .service-card:nth-child(8) { animation-delay: 0.8s; }
+        .service-card:nth-child(9) { animation-delay: 0.9s; }
+        .service-card:nth-child(10) { animation-delay: 1s; }
+        .service-card:nth-child(11) { animation-delay: 1.1s; }
+        .service-card:nth-child(12) { animation-delay: 1.2s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>SiaxCDN</h1>
+            <p class="subtitle">基于 Serverless 的多功能CDN反向代理服务</p>
+            <div class="domain">域名: cdn.siax.cn</div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="搜索CDN服务...">
+            </div>
+        </header>
+
+        <!-- Services -->
+        <section class="services-section">
+            <h2 class="section-title">可用服务列表</h2>
+            <div class="services-grid" id="services-grid">
+                <!-- 服务卡片将通过JavaScript动态生成 -->
+            </div>
+        </section>
+
+        <!-- Usage Examples -->
+        <section class="usage-section">
+            <h2 class="section-title">使用示例</h2>
+            <div class="usage-grid">
+                <div class="usage-card">
+                    <h3>HTML 中使用</h3>
+                    <div class="code-block">
+                        &lt;script src="https://cdn.siax.cn/npm/vue@3.3.4/dist/vue.global.js"&gt;&lt;/script&gt;
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                <div class="usage-card">
+                    <h3>Gravatar 头像</h3>
+                    <div class="code-block">
+                        &lt;img src="https://cdn.siax.cn/avatar/EMAIL_MD5_HASH?s=200&d=mp" alt="用户头像"&gt;
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+                <div class="usage-card">
+                    <h3>API 调用</h3>
+                    <div class="code-block">
+                        POST https://cdn.siax.cn/gemini/v1/models/gemini-pro:generateContent
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2026 SiaxCDN. 基于 Serverless 架构的CDN反向代理服务.</p>
+                <p style="margin-top: 10px; font-size: 0.9rem; color: var(--text-secondary);">
+                    支持 Vercel、Netlify、腾讯云等多平台部署
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 服务数据
+        const services = [
+            {
+                "id": "npm",
+                "name": "NPM加速",
+                "source": "/npm/*",
+                "destination": "https://cdn.jsdelivr.net/npm/$1",
+                "description": "NPM 包文件加速，支持指定版本号、标签和具体文件路径",
+                "example": "/npm/vue@3.3.4/dist/vue.global.js"
+            },
+            {
+                "id": "gh",
+                "name": "GitHub加速",
+                "source": "/gh/*",
+                "destination": "https://cdn.jsdelivr.net/gh/$1",
+                "description": "GitHub 仓库文件代理，格式：/gh/用户/仓库@版本/文件路径",
+                "example": "/gh/twbs/bootstrap@5.3.0/dist/css/bootstrap.css"
+            },
+            {
+                "id": "wp",
+                "name": "WordPress加速",
+                "source": "/wp/*",
+                "destination": "https://cdn.jsdelivr.net/wp/$1",
+                "description": "WordPress 插件/主题资源加速，支持官方仓库所有资源",
+                "example": "/wp/plugins/akismet/tags/5.2/akismet.js"
+            },
+            {
+                "id": "avatar",
+                "name": "Gravatar头像",
+                "source": "/avatar/*",
+                "destination": "https://www.gravatar.com/avatar/$1",
+                "description": "头像服务代理，支持尺寸、默认头像等参数，哈希算法：MD5",
+                "example": "/avatar/EMAIL_MD5_HASH?s=200&d=mp&r=g"
+            },
+            {
+                "id": "unpkg",
+                "name": "Unpkg加速",
+                "source": "/unpkg/*",
+                "destination": "https://unpkg.com/$1",
+                "description": "NPM 包浏览器友好化，自动解析包入口文件及依赖",
+                "example": "/unpkg/react@18.2.0/umd/react.production.min.js"
+            },
+            {
+                "id": "cdnjs",
+                "name": "cdnjs加速",
+                "source": "/cdnjs/*",
+                "destination": "https://cdnjs.cloudflare.com/ajax/libs/$1",
+                "description": "通用前端库加速，包含数千个常见JavaScript/CSS库",
+                "example": "/cdnjs/jquery/3.7.1/jquery.min.js"
+            },
+            {
+                "id": "fonts",
+                "name": "Google Fonts CSS",
+                "source": "/fonts/*",
+                "destination": "https://fonts.googleapis.com/css$1",
+                "description": "Web字体样式表代理，支持多字体、字重和字符集参数",
+                "example": "/fonts?family=Roboto:wght@300;400;700&display=swap"
+            },
+            {
+                "id": "fonts-gstatic",
+                "name": "Google Fonts文件",
+                "source": "/fonts-gstatic/*",
+                "destination": "https://fonts.gstatic.com/s/$1",
+                "description": "字体文件资源代理，提供WOFF2等格式的字体文件",
+                "example": "/fonts-gstatic/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2"
+            },
+            {
+                "id": "jquery",
+                "name": "jQuery官方",
+                "source": "/jquery/*",
+                "destination": "https://code.jquery.com/$1",
+                "description": "jQuery官方CDN代理，提供所有版本的核心库及插件",
+                "example": "/jquery/jquery-3.7.1.min.js"
+            },
+            {
+                "id": "bootstrap",
+                "name": "Bootstrap",
+                "source": "/bootstrap/*",
+                "destination": "https://stackpath.bootstrapcdn.com/bootstrap/$1",
+                "description": "Bootstrap框架资源，包含CSS、JS及主题文件所有版本",
+                "example": "/bootstrap/5.3.0/css/bootstrap.min.css"
+            },
+            {
+                "id": "fontawesome",
+                "name": "Font Awesome",
+                "source": "/fontawesome/*",
+                "destination": "https://use.fontawesome.com/releases/$1",
+                "description": "图标字体库代理，支持CSS和JS两种引入方式及版本选择",
+                "example": "/fontawesome/v6.4.0/css/all.css"
+            },
+            {
+                "id": "gemini",
+                "name": "Gemini API",
+                "source": "/gemini/*",
+                "destination": "https://generativelanguage.googleapis.com/$1",
+                "description": "Gemini AI API 代理，用于调用谷歌生成式AI模型接口",
+                "example": "/gemini/v1/models"
+            }
+        ];
+
+        // 渲染服务卡片
+        function renderServices(servicesToRender = services) {
+            const grid = document.getElementById('services-grid');
+            grid.innerHTML = '';
+
+            servicesToRender.forEach(service => {
+                const card = document.createElement('div');
+                card.className = 'service-card';
+                card.innerHTML = `
+                    <h3>${service.name}</h3>
+                    <div class="source">https://cdn.siax.cn${service.source}</div>
+                    <p class="description">${service.description}</p>
+                    <div class="example">
+                        https://cdn.siax.cn${service.example}
+                        <button class="copy-btn" onclick="copyToClipboard(this)">复制</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // 搜索功能
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredServices = services.filter(service => 
+                service.name.toLowerCase().includes(searchTerm) ||
+                service.description.toLowerCase().includes(searchTerm) ||
+                service.source.toLowerCase().includes(searchTerm)
+            );
+            renderServices(filteredServices);
+        });
+
+        // 复制到剪贴板
+        function copyToClipboard(button) {
+            const codeBlock = button.parentElement;
+            const text = codeBlock.textContent.replace('复制', '').trim();
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '已复制!';
+                button.style.background = '#48bb78';
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = '';
+                }, 2000);
+            });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderServices();
+        });
+    </script>
+</body>
+</html>
